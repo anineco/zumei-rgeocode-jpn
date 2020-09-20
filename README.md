@@ -1,5 +1,5 @@
 # zumei-rgeocode-jpn
-Setup MySQL to find Japan 1/25,000 topographic map containing a specified point
+Setup MySQL to find Japan topographic map containing a specified point
 
 ## はじめに
 国土地理院HPの[20万分1地勢図の新旧緯度・経度対照表(索引図)](https://www.gsi.go.jp/MAP/NEWOLDBL/200000/index200000.html)、[5万分の1，2.5万分の1地形図の新旧緯度・経度対照表(索引図)](https://www.gsi.go.jp/MAP/NEWOLDBL/25000-50000/index25000-50000.html)とMySQLのGIS機能を利用して、緯度・経度から図名を求める逆ジオコーディングAPIを自前で構築する手順を示す。
