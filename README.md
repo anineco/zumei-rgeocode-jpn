@@ -74,10 +74,11 @@ SET @pt=ST_GeomFromText(CONCAT('POINT(',@lon,' ',@lat,')'),4326);
 SELECT type,mapno,name FROM zumei WHERE ST_Contains(area,@pt) ORDER BY type;
 ```
 SQLファイルを全てインポートした場合は、次の結果が得られる。
-1 47          ★水戸
+```
+1 47         ★水戸
 2 水戸16号    ★土浦
 3 水戸16号-3  ★上郷
-
+```
 注：MySQL8では、POINT中の@lonと@latの順番が入れ替わる（https://dev.mysql.com/doc/refman/8.0/en/gis-wkt-functions.html#function_st-geomfromtext）。 
 
 ## API用PHPの設置
