@@ -84,6 +84,9 @@ SQLファイルを全てインポートした場合は、次の結果が得ら�
 ## API用PHPの設置
 init.phpにデータベースへアクセスするための情報を記入し、zumei.phpと共にWebサーバに設置する。MySQL8 の場合、STEP 6.の注と同じ理由により、zumei.phpの一部を書き換える必要がある。
 
+### TODO
+* 図郭を地図上に表示
+
 ### 参考URL
 * [逆ジオコーディングAPIを自前で構築](https://github.com/anineco/easy-rgeocode-jpn)
 * [MySQLでGISデータを扱う](https://qiita.com/onunu/items/59ef2c050b35773ced0d)
