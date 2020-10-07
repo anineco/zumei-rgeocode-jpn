@@ -37,3 +37,4 @@ inc/
 # added by anineco
 *.sql
 *.csv
+*.geojson
