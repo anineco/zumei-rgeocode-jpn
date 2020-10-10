@@ -6,7 +6,7 @@ Setup reverse geocoding API using MySQL to search a map name of Japan topographi
 
 表示例：https://anineco.github.io/zumei-rgeocode-jpn/example.html
 
-左上の[⌖]ボタンを押すと中央十字線の緯度、経度を読み取り、逆ジオコーディングを実行して、20万図名、5万図名、2.5万図名をポップアップ表示する。
+左上の[⌖]ボタンを押すと中央十字線の緯度、経度を読み取り、逆ジオコーディングを実行して、20万図名、5万図名、2.5万図名をポップアップ表示する。また、2.5万図名の範囲を赤く薄塗りして示す。
 
 ## 逆ジオコーディングAPI（試験公開）
 ```
@@ -18,6 +18,7 @@ https://map.jpn.org/share/zumei.php?lat=緯度&lon=経度
 * type: 1=20万図、2=5万図、3=2.5万図
 * mapno: 地図の番号
 * name: 図名
+* region: 図の範囲（GeoJSONの'{"type":"Polygon",…}'要素）
 
 図名の先頭に★が付くものは、世界測地系の緯度経度を表示した地形図が刊行されているもの、※は以前に刊行されていたが,現在は廃止されたものを示す。
 
@@ -84,7 +85,7 @@ SQLファイルを全てインポートした場合は、次の結果が得ら�
 init.phpにデータベースへアクセスするための情報を記入し、zumei.phpと共にWebサーバに設置する。MySQL8 の場合、STEP 6.の注と同じ理由により、zumei.phpの一部を書き換える必要がある。
 
 ### TODO
-* 図郭を地図上に表示
+* ~~図郭を地図上に表示~~
 
 ### 参考URL
 * [逆ジオコーディングAPIを自前で構築](https://github.com/anineco/easy-rgeocode-jpn)

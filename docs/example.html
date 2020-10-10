@@ -21,8 +21,9 @@ body {
 }
 #crosshair {
   position: absolute;
-  top: calc(50% - 12px);
-  left: calc(50% - 12px);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 1000;
 }
 .leaflet-bar button, .leaflet-bar button:hover {
@@ -39,7 +40,7 @@ body {
   crossorigin=""></script>
 <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
 <script>
-const param = { lon: 139.765249, lat: 35.681552, zoom: 12 };
+const param = { lon: 138.930171, lat: 36.837098, zoom: 12 };
 location.search.slice(1).split('&').forEach(function (ma) {
   const s = ma.split('=');
   param[s[0]] = Number(s[1]);
@@ -54,6 +55,8 @@ const std = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.pn
 }).addTo(map);
 
 const helloPopup = L.popup();
+const group = L.layerGroup().addTo(map);
+
 L.easyButton('&target;', function(btn, map) {
   const center = map.getCenter();
   helloPopup.setLatLng(center);
@@ -61,11 +64,28 @@ L.easyButton('&target;', function(btn, map) {
     .then(function (response) { return response.json(); })
     .then(function (json) {
       let html = '<table><tr><th>種別</th><th>番号</th><th>図名</th></tr>';
+      let region;
       json.maps.forEach(function (map) {
         html += '<tr><td>' + map.type + '</td><td>' + map.mapno + '</td><td>' + map.name + '</td></tr>';
+        if (map.type == 3) {
+          region = '{"type":"FeatureCollection","features":[' + map.region + ']}';
+        }
       });
       html += '</table>';
       helloPopup.setContent(html).openOn(map);
+      if (region) {
+        group.clearLayers();
+        group.addLayer(L.geoJSON(JSON.parse(region), {
+          style: {
+            color: '#ff0000',
+            weight: 1,
+            opacity: 0.5
+          }
+        }));
+        map.on('popupclose', function (event) {
+          group.clearLayers();
+        });
+      }
     });
 }).addTo(map);
 </script>

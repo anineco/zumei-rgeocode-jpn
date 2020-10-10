@@ -24,7 +24,8 @@ $sth->bindValue(2, $lat, PDO::PARAM_STR);
 $sth->execute();
 $sth = null;
 $sql = <<<'EOS'
-SELECT type,mapno,name FROM zumei WHERE ST_Contains(area,@pt)
+SELECT type,mapno,name,ST_AsGeoJSON(area,4) AS region
+FROM zumei WHERE ST_Contains(area,@pt) ORDER BY type
 EOS;
 $sth = $dbh->prepare($sql);
 $sth->execute();
@@ -33,7 +34,8 @@ while ($row = $sth->fetch(PDO::FETCH_OBJ)) {
   $maps[] = array(
     'type' => $row->type,
     'mapno' => $row->mapno,
-    'name' => $row->name
+    'name' => $row->name,
+    'region' => $row->region
   );
 }
 $sth = null;
