@@ -7,6 +7,22 @@ use open ':utf8';
 use open ':std';
 use URI;
 use Web::Scraper;
+use LWP::UserAgent;
+
+# FIXED:
+# SSL connect attempt failed error:0A000152:SSL routines::unsafe legacy renegotiation disabled
+
+my $ua = LWP::UserAgent->new(
+  ssl_opts => {
+    verify_hostname => 0,
+    SSL_create_ctx_callback => sub {
+      my $ctx = shift;
+      # 0x00040000 SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION
+      Net::SSLeay::CTX_set_options($ctx, 0x40000);
+      Net::SSLeay::CTX_set_security_level($ctx, 1);
+    },
+  }
+);
 
 my $items = scraper {
   process 'table tbody', 'items[]' => scraper {
@@ -38,6 +54,7 @@ my $items = scraper {
     };
   };
 };
+$items->user_agent($ua);
 
 sub output_csv {
   my ($out, $url, $type) = @_;
@@ -63,6 +80,7 @@ close($out);
 my $areas = scraper {
   process 'map area', 'areas[]' => { 'href' => '@href' };
 };
+$areas->user_agent($ua);
 
 my %map50000 = ();
 my %map25000 = ();
