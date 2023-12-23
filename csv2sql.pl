@@ -14,7 +14,7 @@ sub dms2deg {
     return 0;
   }
   my @d = split(/[[:space:]]+/, $dms);
-  return $#d == 2 ? sprintf("%.8f", $d[0] + $d[1] / 60 + $d[2] / 3600) : 0;
+  return $#d == 2 ? sprintf("%.6f", $d[0] + $d[1] / 60 + $d[2] / 3600) : 0;
 }
 
 my $csv = Text::CSV_XS->new({ binary => 1 });
