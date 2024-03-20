@@ -48,11 +48,12 @@ get_zumei.pl を実行すると国土地理院HPからデータを抽出して m
 
 次の SQLコマンドでテーブルを作成する。
 ```
-CREATE TABLE zumei (
-  type TINYINT NOT NULL COMMENT '種別',
-  mapno VARCHAR(255) NOT NULL COMMENT '地図番号',
-  name VARCHAR(255) NOT NULL COMMENT '図名',
-  area GEOMETRY NOT NULL /*!80003 SRID 4326 */ COMMENT '範囲'
+CREATE TABLE `zumei` (
+  `type` tinyint NOT NULL COMMENT '種別',
+  `mapno` varchar(255) NOT NULL COMMENT '地図番号',
+  `name` varchar(255) NOT NULL COMMENT '図名',
+  `area` polygon NOT NULL /*!80003 SRID 4326 */ COMMENT '範囲',
+  SPATIAL KEY `area` (`area`)
 );
 ```
 なお、MySQL8の場合は、areaフィールドにSRID 4326を設定している（ https://dev.mysql.com/doc/refman/8.0/en/spatial-type-overview.html ）。
@@ -60,13 +61,7 @@ CREATE TABLE zumei (
 ### STEP 4. 入力データ（SQL）のインポート
 map200000.sql、map50000.sql、map25000.sql のうち、必要なものをSTEP 3.で作成したテーブルにインポートする。phpMyAdmin を用いる場合は、SQLファイルをドラッグ&ドロップでインポートする機能が便利である。
 
-### STEP 5. インデックスの設定
-データをインポート後、インデックスを設定する。
-```
-ALTER TABLE zumei ADD SPATIAL KEY (area);
-```
-
-### STEP 6. テスト
+### STEP 5. テスト
 ```
 SET @lon=140.084619;
 SET @lat=36.104638;
@@ -82,10 +77,7 @@ SQLファイルを全てインポートした場合は、次の結果が得ら�
 注：MySQL8では、POINT中の@lonと@latの順番が入れ替わる（ https://dev.mysql.com/doc/refman/8.0/en/gis-wkt-functions.html#function_st-geomfromtext ）。 
 
 ## API用PHPの設置
-init.phpにデータベースへアクセスするための情報を記入し、zumei.phpと共にWebサーバに設置する。MySQL8 の場合、STEP 6.の注と同じ理由により、zumei.phpの一部を書き換える必要がある。
-
-### TODO
-* ~~図郭を地図上に表示~~
+init.phpにデータベースへアクセスするための情報を記入し、zumei.phpと共にWebサーバに設置する。
 
 ### 参考URL
 * [逆ジオコーディングAPIを自前で構築](https://github.com/anineco/easy-rgeocode-jpn)
