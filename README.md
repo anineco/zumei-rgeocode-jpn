@@ -25,7 +25,7 @@ https://map.jpn.org/share/zumei.php?lat=緯度&lon=経度
 ## データベースの作成
 
 ### STEP 1. 入力データ（SQL）の入手
-作成済のデータ（[zumei-rgeocode-jpn_200920.zip](https://map.jpn.org/share/zumei-rgeocode-jpn_200920.zip)）も公開しているので、これを用いても良い。ダウンロードして適当なディレクトリで解凍すると、
+作成済のデータ（[zumei-rgeocode-jpn_240530.zip](https://map.jpn.org/share/zumei-rgeocode-jpn_240530.zip)）も公開しているので、これを用いても良い。ダウンロードして適当なディレクトリで解凍すると、
 * map200000.sql
 * map50000.sql
 * map25000.sql

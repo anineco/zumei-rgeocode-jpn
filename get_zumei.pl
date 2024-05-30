@@ -87,15 +87,15 @@ my %map25000 = ();
 
 my $res = $areas->scrape(URI->new('https://www.gsi.go.jp/MAP/NEWOLDBL/25000-50000/index25000-50000.html'));
 for my $area (@{$res->{areas}}) {
-  next if ($area->{href} !~ m%^https://www.gsi.go.jp/MAP/NEWOLDBL/25000-50000/%);
+  next unless ($area->{href} =~ m%^https://www.gsi.go.jp/MAP/NEWOLDBL/25000-50000/% || $area->{href} =~ m%^https://www.gsi.go.jp/gyoumu/gyoumu40005.html%);
   my $r = $areas->scrape(URI->new($area->{href}));
   for my $a (@{$r->{areas}}) {
     my $h = $a->{href};
     $h =~ s/#.*$//;
-    if ($h =~ m%^https://www.gsi.go.jp/MAP/NEWOLDBL/25000-50000/50000/%) {
+    if ($h =~ m%^https://www.gsi.go.jp/MAP/NEWOLDBL/25000-50000/50000/% || $h =~ m%^https://www.gsi.go.jp/gyoumu/gyoumu40007.html%) {
       $map50000{$h} = 1;
     }
-    if ($h =~ m%^https://www.gsi.go.jp/MAP/NEWOLDBL/25000-50000/25000/%) {
+    if ($h =~ m%^https://www.gsi.go.jp/MAP/NEWOLDBL/25000-50000/25000/% || $h =~ m%^https://www.gsi.go.jp/gyoumu/gyoumu40006.html%) {
       $map25000{$h} = 1;
     }
   }
